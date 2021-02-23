@@ -14,7 +14,7 @@ ctrlc.create = (req, res) => {
     category.name = params.name;
 
     // Y guardar category
-    category.save((err, data) => {
+    category.save((err, categoryStored) => {
 
         if(err){
             return res.status(404).send({
@@ -22,7 +22,7 @@ ctrlc.create = (req, res) => {
             });
         }
 
-        if(!data){
+        if(!categoryStored){
             return res.status(500).send({
                 message: "The category doesn't save"
             });
@@ -31,14 +31,14 @@ ctrlc.create = (req, res) => {
         // Devolver respuesta
         return res.status(200).send({
             status: 'success',
-            category: data
+            category: categoryStored
         });
     });
 };
 
 //list category
 ctrlc.list = (req, res) => {
-    Category.find().exec((err, data) => {
+    Category.find().exec((err, categories) => {
 
         if(err){
 
@@ -48,7 +48,7 @@ ctrlc.list = (req, res) => {
             });
         }
 
-        if(!data){
+        if(!categories){
 
             return res.status(404).send({
                 status: "error",
@@ -58,10 +58,77 @@ ctrlc.list = (req, res) => {
 
         return res.status(200).send({
             status: "success",
-            category: data
+            categories: categories
         });
 
     });
-}
+};
+
+//remove categoryById
+ctrlc.delete = (req, res) => {
+
+    var categoyId = req.params.id;
+
+    // Find and delete por categoryID 
+    Category.findOneAndDelete({_id: categoyId}, (err, categoryRemoved) => {
+
+        if(err){
+
+            return res.status(500).send({
+                status: "error",
+                message: "Error en la peticion"
+            });
+        }
+
+        if(!categoryRemoved){
+
+            return res.status(404).send({
+                status: "error",
+                message: "No se ha borrado la categoria"
+            });
+        }
+
+        // Devolver respuesta
+        return res.status(200).send({
+            status: 'success',
+            category: categoryRemoved
+        });
+    });
+
+};
+
+//listar por ID categoryById
+ctrlc.getCategory = (req, res) => {
+
+    var categoryId = req.params.id;
+
+    // Find por id del topic
+    Category.findById(categoryId)
+         .exec((err, category) => {
+
+            if(err){
+
+                return res.status(500).send({
+                    status: "error",
+                    message: "Error en la peticion"
+                });
+            }
+
+            if(!category){
+
+                return res.status(404).send({
+                    status: "error",
+                    message: "No existe la categoria"
+                });
+            }
+
+            return res.status(200).send({
+                status: "success",
+                category: category
+            });
+
+         });
+
+};
 
 module.exports = ctrlc;

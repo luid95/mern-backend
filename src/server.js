@@ -35,6 +35,6 @@ app.use( (req, res, next) => {
 });
 
 //rutas base
-app.use('/api/category', category_routes);
+app.use('/api', category_routes);
 
 module.exports = app;
