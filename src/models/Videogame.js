@@ -33,8 +33,7 @@ const videogameSchema = new Schema(
             type: Number
         },
         photo: {
-            data: Buffer,
-            contentType: String
+            type: String
         }
     },
     { timestamps: true }

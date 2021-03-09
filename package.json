@@ -10,14 +10,18 @@
   "author": "Luis David Morales",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.9.2",
     "fs": "^0.0.1-security",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.29.1",
     "mongoose": "^5.11.17",
     "morgan": "^1.10.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "validator": "^13.5.2"
   }
 }

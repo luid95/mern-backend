@@ -11,6 +11,7 @@ require('dotenv').config();
 //Carga de rutas
 var category_routes = require('./routes/Category');
 var vgames_routes = require('./routes/Videogame');
+var user_routes = require('./routes/User');
 
 //configuracion de puerto
 app.set('port', process.env.PORT || 3001);
@@ -38,5 +39,6 @@ app.use( (req, res, next) => {
 //rutas base
 app.use('/api', category_routes);
 app.use('/api', vgames_routes);
+app.use('/api', user_routes);
 
 module.exports = app;

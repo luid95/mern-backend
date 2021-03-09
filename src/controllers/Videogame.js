@@ -9,7 +9,7 @@ const { nextTick } = require('process');
 var ctrlvg = {};
 
 //create videogame
-ctrlvg.create = (req, res, files) => {
+ctrlvg.create = (req, res) => {
 
     var params = req.body;
 
@@ -54,7 +54,6 @@ ctrlvg.create = (req, res, files) => {
 //list videogame
 ctrlvg.list = (req, res) => {
     Videogame.find()
-    .select("-photo")
     .populate("category")
     .sort([['name', 'desc']])
     .exec((err, vgames) => {

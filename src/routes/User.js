@@ -1,6 +1,6 @@
 'use strict'
 const express = require('express');
-const videogameController = require('../controllers/Videogame');
+const userController = require('../controllers/User');
 
 //para crear una ruta con express
 var router = express.Router();
@@ -12,7 +12,7 @@ var multer = require('multer');
 
 const storage = multer.diskStorage({
     destination(req, file, cb) {
-      cb(null, './src/uploads/videogames');
+      cb(null, './src/uploads/users');
     },
     filename(req, file = {}, cb) {
       const { originalname } = file;
@@ -24,15 +24,16 @@ const storage = multer.diskStorage({
       });
     },
   });
-var md_upload = multer({dest: './src/uploads/videogames',storage});
+var md_upload = multer({dest: './src/uploads/users',storage});
 
-router.post('/video-game/create', md_auth.authenticated, videogameController.create);
-router.get('/video-game/videogames', videogameController.list);
+router.get('/probando', md_auth.authenticated, userController.probando);
 
-router.delete('/video-game/:id', md_auth.authenticated, videogameController.delete);
-router.get('/video-game/:id', videogameController.getVideogame);
-
-router.post('/video-game/upload-vgame/:vgameId', md_auth.authenticated, md_upload.single('photo'), videogameController.uploadphoto);
-router.get('/video-game/get-image-vgame/:imageFile', videogameController.getImageFile);
+router.post('/register', userController.save);
+router.post('/login', userController.login);
+router.put('/user/update', md_auth.authenticated, userController.update);
+router.post('/upload-avatar', [md_auth.authenticated, md_upload.single('file0')], userController.uploadAvatar);
+router.get('/avatar/:fileName', userController.avatar);
+router.get('/users', userController.getUsers);
+router.get('/user/:userId', userController.getUser);
 
 module.exports = router;
